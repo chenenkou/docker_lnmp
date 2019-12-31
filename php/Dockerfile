@@ -13,6 +13,6 @@ RUN pecl install -o -f redis \
 	&&  rm -rf /tmp/pear \
 	&&  docker-php-ext-enable redis
 
-WORKDIR /var/www
+#WORKDIR /var/www
 
 EXPOSE 9000

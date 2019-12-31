@@ -6,12 +6,12 @@ services:
     volumes:
       - ./data/mongo:/data/db
     ports:
-      - 27017:27017
+      - 28017:27017
 
   redis:
     build: ./redis
     ports:
-      - 6379:6379
+      - 6479:6379
 
   mysql:
     build: ./mysql
@@ -20,12 +20,12 @@ services:
     volumes:
       - ./data/mysql:/var/lib/mysql
     ports:
-      - 3306:3306
+      - 3406:3306
 
   php:
     build: ./php
     volumes:
-      - ${WWW_PATH}:/var/www
+      - ${WWW_PATH}:/var/www/html
     depends_on: 
       - mysql
       - redis
@@ -36,10 +36,10 @@ services:
     environment:
         TZ: 'Asia/Shanghai'
     volumes:
-      - ${WWW_PATH}:/var/www
+      - ${WWW_PATH}:/var/www/html
       - ./log/nginx:/var/log/nginx
       - ./nginx/conf.d:/etc/nginx/conf.d
     ports:
-      - 80:80
+      - 8000:80
     depends_on: 
       - php
