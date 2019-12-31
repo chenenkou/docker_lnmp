@@ -1,0 +1,45 @@
+version: '3'
+
+services:
+  mongo:
+    build: ./mongo
+    volumes:
+      - ./data/mongo:/data/db
+    ports:
+      - 27017:27017
+
+  redis:
+    build: ./redis
+    ports:
+      - 6379:6379
+
+  mysql:
+    build: ./mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+    ports:
+      - 3306:3306
+
+  php:
+    build: ./php
+    volumes:
+      - ${WWW_PATH}:/var/www
+    depends_on: 
+      - mysql
+      - redis
+      - mongo
+
+  nginx:
+    build: ./nginx
+    environment:
+        TZ: 'Asia/Shanghai'
+    volumes:
+      - ${WWW_PATH}:/var/www
+      - ./log/nginx:/var/log/nginx
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    ports:
+      - 80:80
+    depends_on: 
+      - php
