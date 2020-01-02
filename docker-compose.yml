@@ -5,11 +5,13 @@ services:
     build: ./mongo
     volumes:
       - ./data/mongo:/data/db
+      - ./mongo/configdb:/data/configdb
     ports:
       - 28017:27017
 
   redis:
     build: ./redis
+    - ./data/redis:/data
     ports:
       - 6479:6379
 
