@@ -11,7 +11,8 @@ services:
 
   redis:
     build: ./redis
-    - ./data/redis:/data
+    volumes:
+      - ./data/redis:/data
     ports:
       - 6479:6379
 
